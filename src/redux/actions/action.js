@@ -11,3 +11,10 @@ export const REMOVE_CART = (id) => {
     };
   };
   
+  export const REMOVE_IND_ITEM = (item) => {
+    return {
+      type: "REMOVE_IND",
+      payload:item,
+    };
+  };
+  

@@ -35,7 +35,7 @@ const Header = () => {
   const total=()=>{
     let price=0;
     getdata.map((ele)=>{
-      price=ele.price+price;
+      price=ele.price *ele.qnty+price;
     });
    setprice(price);
   }
@@ -105,7 +105,7 @@ const Header = () => {
                             <p>
                               Price: Rs.{items.price}
                             </p>
-                            <p>Quantity:{items.qnty+1}</p>
+                            <p>Quantity:{items.qnty}</p>
                             <p onClick={()=>del(items.id)} style={{cursor:"pointer"}}><AiFillDelete /></p>
                           </td>
                         </tr>

@@ -4,7 +4,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import "./style.css";
-import {REMOVE_CART} from "../redux/actions/action";
+import {REMOVE_CART,ADD_TO_CART,REMOVE_IND_ITEM} from "../redux/actions/action";
 
 const CardsDetails = () => {
 
@@ -28,9 +28,17 @@ const CardsDetails = () => {
     setData(data);
   }
 
+  const addHandler=(item)=>{
+    dispatch(ADD_TO_CART(item))
+  }
+
   const del=(id)=>{
     dispatch(REMOVE_CART(id))
     history("/");
+  }
+
+  const remove=(item)=>{
+    dispatch(REMOVE_IND_ITEM(item))
   }
 
 
@@ -65,10 +73,10 @@ const CardsDetails = () => {
                     <p> <strong>Dishes</strong>  : {ele.address}</p>
                     <p> <strong>Total</strong>  :₹  {ele.price * ele.qnty}</p>
                     <div className='mt-5 d-flex justify-content-between align-items-center' style={{width:100,cursor:"pointer",background:"#ddd",color:"#111"}}>
-                    {/* <span style={{fontSize:24}} onClick={ele.qnty <=1 ? ()=>dlt(ele.id) : ()=>remove(ele)}>-</span> */}
-                    {/* <span style={{fontSize:22}}>{ele.qnty}</span>
-                    <span style={{fontSize:24}} onClick={()=>send(ele)}>+</span> */}
-
+                    <span style={{fontSize:24}} onClick={ele.qnty <=1 ? ()=>del(ele.id) : ()=>remove(ele)}>-</span>
+                   <span style={{fontSize:22}}>{ele.qnty}</span>
+                    <span style={{fontSize:24}} onClick={()=>addHandler(ele)}>+</span>
+                   
                     </div>
 
                   </td>
