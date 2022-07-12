@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Badge, Container, Nav, Navbar, Table } from "react-bootstrap";
 import { IoMdCart } from "react-icons/io";
 import { GrFormClose } from "react-icons/gr";
 import { NavLink } from "react-router-dom";
 import Menu from "@mui/material/Menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {AiFillDelete} from "react-icons/ai"
+import {REMOVE_CART} from "../redux/actions/action";
  
 const Header = () => {
+
+ const [price,setprice]=useState(0);
+ console.log(price);
   const getdata = useSelector((state) => state.cartreducer.carts);
   console.log("cart", getdata);
+
+
+  const dispatch=useDispatch();
+
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -19,6 +27,22 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const del=(id)=>{
+    dispatch(REMOVE_CART(id))
+  }
+
+  const total=()=>{
+    let price=0;
+    getdata.map((ele)=>{
+      price=ele.price+price;
+    });
+   setprice(price);
+  }
+
+  useEffect(()=>{
+    total()
+  },[total])
 
   return (
     <>
@@ -72,7 +96,7 @@ const Header = () => {
                       <>
                         <tr>
                           <td>
-                            <img src={items.imgdata} alt="" style={{width:"5rem",height:"5rem"}} />
+                           <NavLink to={`/cart/${items.id}`}onClick={handleClose}><img src={items.imgdata} alt="" style={{width:"5rem",height:"5rem"}} /></NavLink> 
                           </td>
                           <td>
                             <p>
@@ -82,13 +106,13 @@ const Header = () => {
                               Price: Rs.{items.price}
                             </p>
                             <p>Quantity:{items.qnty+1}</p>
-                            <p><AiFillDelete /></p>
+                            <p onClick={()=>del(items.id)} style={{cursor:"pointer"}}><AiFillDelete /></p>
                           </td>
                         </tr>
                       </>
                     );
                   })}
-                  <p className="text-center">Total:Rs.300</p>
+                  <p className="text-center">Total: Rs.{price}</p>
                 </tbody>
               </Table>
             </div>
