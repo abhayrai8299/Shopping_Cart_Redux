@@ -58,14 +58,12 @@ const Header = () => {
             </NavLink>
           </Nav>
 
-          <IoMdCart color="white" fontSize="25px" cursor="pointer" />
-          <Badge
-            id="basic-button"
+          <IoMdCart color="white" fontSize="25px" cursor="pointer" id="basic-button"
             aria-controls={open ? "basic-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          >
+            onClick={handleClick}/>
+          <Badge>
             {getdata.length}
           </Badge>
         </Container>
